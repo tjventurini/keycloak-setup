@@ -18,7 +18,7 @@ services:
       - KC_DB_URL= jdbc:postgresql://${DB_HOST}:${DB_PORT}/keycloak
       - KC_DB_USERNAME=${DB_USER}
       - KC_DB_PASSWORD=${DB_PASSWORD}
-    command: start-dev
+    command: start --optimized --hostname=${DOMAIN}
     expose:
       - 8080
     depends_on:
@@ -27,9 +27,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=reverse-proxy"
-      # http
-      - "traefik.http.routers.keycloak.rule=Host(`keycloak.localhost`)"
-      - "traefik.http.routers.keycloak.entrypoints=web"
+      # https
+      - "traefik.http.routers.keycloak.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.keycloak.entrypoints=websecure"
+      - "traefik.http.routers.keycloak.tls=true"
+      - "traefik.http.routers.keycloak.tls.certresolver=letsencrypt"
+      # middlewares
+      - "traefik.http.routers.keycloak.middlewares=redirect-to-non-www@file,compress@file"
     # add the network to the service configuration
     networks:
      - frontend
