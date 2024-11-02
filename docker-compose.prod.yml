@@ -30,6 +30,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=reverse-proxy"
+      - "traefik.http.services.keycloak.loadbalancer.server.port=8080"
       # https
       - "traefik.http.routers.keycloak.rule=Host(`${DOMAIN}`)"
       - "traefik.http.routers.keycloak.entrypoints=websecure"
