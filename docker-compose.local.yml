@@ -1,0 +1,50 @@
+networks:
+  frontend:
+    name: reverse-proxy
+    external: true
+  backend:
+    external: false
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      - KC_HEALTH_ENABLED=true
+      - KC_METRICS_ENABLED=true
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      - KC_DB=postgres
+      - KC_DB_URL= jdbc:postgresql://postgres:5432/keycloak
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=secret
+      - KC_HOSTNAME=keycloak.localhost
+    command: start-dev
+    expose:
+      - 8080
+    depends_on:
+      - postgres
+    # add the labels to the service configuration
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=reverse-proxy"
+      # http
+      - "traefik.http.routers.keycloak.rule=Host(`keycloak.localhost`)"
+      - "traefik.http.routers.keycloak.entrypoints=web"
+    # add the network to the service configuration
+    networks:
+     - frontend
+     - backend
+  
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+volumes:
+  postgres_data:

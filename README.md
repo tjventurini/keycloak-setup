@@ -17,7 +17,8 @@ cd keycloak-setup
 
 2. Start the Keycloak server:
 ```sh
-docker-compose up -d
+make init
+make start
 ```
 
 3. Access Keycloak: Open your browser and go to http://keycloak.localhost. The default admin username is admin and the password is admin.
@@ -25,11 +26,11 @@ docker-compose up -d
 4. Stopping the Server
 To stop the Keycloak server, run:
 ```sh
-docker-compose down
+make stop
 ```
 
 ## Configuration
-You can customize the Keycloak configuration by editing the docker-compose.yml file.
+You can customize the Keycloak configuration by editing the docker-compose.yml and .env files.
 
 ## License
 This project is licensed under the MIT License.
