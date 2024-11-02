@@ -21,7 +21,6 @@ services:
       - KC_DB_PASSWORD=${DB_PASSWORD}
       - KC_PROXY_HEADERS=xforwarded
       - PROXY_ADDRESS_FORWARDING=true
-
     command: start --optimized
     expose:
       - 8080
