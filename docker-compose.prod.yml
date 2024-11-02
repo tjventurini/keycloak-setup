@@ -19,8 +19,9 @@ services:
       - KC_DB_URL= jdbc:postgresql://${DB_HOST}:${DB_PORT}/keycloak
       - KC_DB_USERNAME=${DB_USER}
       - KC_DB_PASSWORD=${DB_PASSWORD}
-      - KC_PROXY_HEADERS='xforwarded'
-      - PROXY_ADDRESS_FORWARDING='true'
+      - KC_PROXY_HEADERS=xforwarded
+      - PROXY_ADDRESS_FORWARDING=true
+
     command: start --optimized
     expose:
       - 8080
