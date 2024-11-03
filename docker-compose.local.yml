@@ -17,8 +17,8 @@ services:
       - KC_BOOTSTRAP_ADMIN_PASSWORD=${KC_BOOTSTRAP_ADMIN_PASSWORD}
       - KC_DB=postgres
       - KC_DB_URL= jdbc:postgresql://${DB_HOST}:${DB_PORT}/keycloak
-      - KC_DB_USERNAME="${DB_USER}"
-      - KC_DB_PASSWORD="${DB_PASSWORD}"
+      - KC_DB_USERNAME=${DB_USER}
+      - KC_DB_PASSWORD=${DB_PASSWORD}
     command: start-dev
     expose:
       - 8080
@@ -40,9 +40,9 @@ services:
     image: postgres:latest
     restart: no
     environment:
-      - POSTGRES_DB="${DB_NAME}"
-      - POSTGRES_USER="${DB_USER}"
-      - POSTGRES_PASSWORD="${DB_PASSWORD}"
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
