@@ -17,8 +17,8 @@ services:
       - KC_BOOTSTRAP_ADMIN_PASSWORD=${KC_BOOTSTRAP_ADMIN_PASSWORD}
       - KC_DB=postgres
       - KC_DB_URL= jdbc:postgresql://${DB_HOST}:${DB_PORT}/keycloak
-      - KC_DB_USERNAME=${DB_USER}
-      - KC_DB_PASSWORD=${DB_PASSWORD}
+      - KC_DB_USERNAME="${DB_USER}"
+      - KC_DB_PASSWORD="${DB_PASSWORD}"
       - KC_PROXY_HEADERS=xforwarded
       - PROXY_ADDRESS_FORWARDING=true
       - KC_PROXY=edge
@@ -26,7 +26,8 @@ services:
     expose:
       - 8080
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     # add the labels to the service configuration
     labels:
       - "traefik.enable=true"
@@ -48,9 +49,9 @@ services:
     image: postgres:latest
     restart: unless-stopped
     environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB="${DB_NAME}"
+      - POSTGRES_USER="${DB_USER}"
+      - POSTGRES_PASSWORD="${DB_PASSWORD}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
