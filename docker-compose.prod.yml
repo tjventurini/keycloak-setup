@@ -21,6 +21,7 @@ services:
       - KC_DB_PASSWORD=${DB_PASSWORD}
       - KC_PROXY_HEADERS=xforwarded
       - PROXY_ADDRESS_FORWARDING=true
+      - KC_PROXY=edge
     command: start --optimized
     expose:
       - 8080
@@ -64,9 +65,6 @@ services:
       - "traefik.http.routers.keycloak-mailhog.rule=Host(`mailhog.${DOMAIN}`)"
       - "traefik.http.routers.keycloak-mailhog.entrypoints=web"
       - "traefik.http.services.keycloak-mailhog.loadbalancer.server.port=8025"
-    # expose:
-    #   - 1025
-    #   - 8025
     networks:
       - frontend
       - backend
