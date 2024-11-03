@@ -45,6 +45,7 @@ services:
   
   postgres:
     image: postgres:latest
+    restart: unless-stopped
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -56,6 +57,7 @@ services:
   
   mailhog:
     image: mailhog/mailhog:latest
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=reverse-proxy"

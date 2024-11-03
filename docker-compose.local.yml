@@ -8,6 +8,7 @@ networks:
 services:
   keycloak:
     image: quay.io/keycloak/keycloak:latest
+    restart: no
     environment:
       - KC_HOSTNAME=${DOMAIN}
       - KC_HEALTH_ENABLED=${KC_HEALTH_ENABLED}
@@ -37,6 +38,7 @@ services:
   
   postgres:
     image: postgres:latest
+    restart: no
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -48,6 +50,7 @@ services:
   
   mailhog:
     image: mailhog/mailhog:latest
+    restart: no
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=reverse-proxy"
