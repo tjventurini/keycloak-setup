@@ -22,7 +22,7 @@ services:
       - KC_PROXY_HEADERS=xforwarded
       - PROXY_ADDRESS_FORWARDING=true
       - KC_PROXY=edge
-    command: start --optimized
+    command: start
     expose:
       - 8080
     depends_on:
