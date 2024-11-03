@@ -26,8 +26,7 @@ services:
     expose:
       - 8080
     depends_on:
-      postgres:
-        condition: service_healthy
+      - postgres
     # add the labels to the service configuration
     labels:
       - "traefik.enable=true"
